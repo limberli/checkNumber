@@ -27,7 +27,8 @@
     </style>
 </head>
 <body>
-<h1>Проверка СНИЛС, ИНН, ОГРН, КПП </h1>
+<h1>Проверка СНИЛС, ИНН, ОГРН/ОГРНИП, КПП </h1>
+<p>онлайн-проверка корректности (по контрольному числу и на соответствие формату)</p>
 
 <!-- СНИЛС -->    
 <div class="section">
@@ -49,7 +50,7 @@
 <div class="section">
     <label>ОГРН/ОГРНИП:</label>
     <input type="text" id="ogrn" placeholder="13 или 15 цифр" maxlength="15" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '')">
-    <button onclick="validateOgrn()">Проверить ОГРН</button>
+    <button onclick="validateOgrn()">Проверить ОГРН/ОГРНИП</button>
     <div class="result" id="result-ogrn"></div>
 </div>
 
