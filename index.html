@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Проверка СНИЛС, ИНН, КПП, ОГРН</title>
+    <title>Проверка СНИЛС, ИНН, КПП, ОГРН/ОГРНИП</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -47,7 +47,7 @@
 
 <!-- ОГРН -->
 <div class="section">
-    <label>ОГРН:</label>
+    <label>ОГРН/ОГРНИП:</label>
     <input type="text" id="ogrn" placeholder="13 или 15 цифр" maxlength="15" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '')">
     <button onclick="validateOgrn()">Проверить ОГРН</button>
     <div class="result" id="result-ogrn"></div>
