@@ -27,7 +27,7 @@
     </style>
 </head>
 <body>
-<h1>Проверка СНИЛС, ИНН, КПП, ОГРН</h1>
+<h1>Проверка СНИЛС, ИНН, ОГРН, КПП </h1>
 
 <div class="section">
     <label>СНИЛС:</label>
@@ -44,18 +44,20 @@
 </div>
 
 <div class="section">
+    <label>ОГРН:</label>
+    <input type="text" id="ogrn" placeholder="13 или 15 цифр">
+    <button onclick="validateOgrn()">Проверить ОГРН</button>
+    <div class="result" id="result-ogrn"></div>
+</div>
+
+<div class="section">
     <label>КПП:</label>
     <input type="text" id="kpp" placeholder="9 цифр">
     <button onclick="validateKpp()">Проверить КПП</button>
     <div class="result" id="result-kpp"></div>
 </div>
 
-<div class="section">
-    <label>ОГРН:</label>
-    <input type="text" id="ogrn" placeholder="13 или 15 цифр">
-    <button onclick="validateOgrn()">Проверить ОГРН</button>
-    <div class="result" id="result-ogrn"></div>
-</div>
+
 
 <script>
     function validateSnils() {
