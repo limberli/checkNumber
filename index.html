@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Проверка СНИЛС, ИНН, КПП, ОГРН</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            max-width: 600px;
+            margin: auto;
+        }
+        input, button {
+            font-size: 18px;
+            padding: 8px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+<h1>Проверка СНИЛС, ИНН, КПП, ОГРН</h1>
+
+<div class="section">
+    <label>СНИЛС:</label>
+    <input type="text" id="snils" placeholder="123-456-789 00">
+    <button onclick="validateSnils()">Проверить СНИЛС</button>
+    <div class="result" id="result-snils"></div>
+</div>
+
+<div class="section">
+    <label>ИНН:</label>
+    <input type="text" id="inn" placeholder="10 или 12 цифр">
+    <button onclick="validateInn()">Проверить ИНН</button>
+    <div class="result" id="result-inn"></div>
+</div>
+
+<div class="section">
+    <label>КПП:</label>
+    <input type="text" id="kpp" placeholder="9 цифр">
+    <button onclick="validateKpp()">Проверить КПП</button>
+    <div class="result" id="result-kpp"></div>
+</div>
+
+<div class="section">
+    <label>ОГРН:</label>
+    <input type="text" id="ogrn" placeholder="13 или 15 цифр">
+    <button onclick="validateOgrn()">Проверить ОГРН</button>
+    <div class="result" id="result-ogrn"></div>
+</div>
+
+<script>
+    function validateSnils() {
+        const raw = document.getElementById('snils').value;
+        const result = document.getElementById('result-snils');
+        const snils = raw.replace(/\D/g, '');
+
+        if (snils.length !== 11) {
+            result.textContent = 'СНИЛС должен содержать 11 цифр';
+            result.style.color = 'red';
+            return;
+        }
+
+        const number = snils.slice(0, 9);
+        const check = parseInt(snils.slice(9), 10);
+        let sum = 0;
+
+        for (let i = 0; i < 9; i++) {
+            sum += parseInt(number[i]) * (9 - i);
+        }
+
+        let control;
+        if (sum < 100) control = sum;
+        else if (sum === 100 || sum === 101) control = 0;
+        else {
+            control = sum % 101;
+            if (control === 100) control = 0;
+        }
+
+        if (control === check) {
+            result.textContent = '✅ СНИЛС корректен';
+            result.style.color = 'green';
+        } else {
+            result.textContent = '❌ СНИЛС недействителен';
+            result.style.color = 'red';
+        }
+    }
+
+    function validateInn() {
+        const raw = document.getElementById('inn').value.replace(/\D/g, '');
+        const result = document.getElementById('result-inn');
+
+        if (raw.length !== 10 && raw.length !== 12) {
+            result.textContent = 'ИНН должен содержать 10 или 12 цифр';
+            result.style.color = 'red';
+            return;
+        }
+
+        function checkInn10(inn) {
+            const coeffs = [2, 4, 10, 3, 5, 9, 4, 6, 8];
+            let sum = coeffs.reduce((acc, k, i) => acc + k * parseInt(inn[i]), 0);
+            let check = sum % 11 % 10;
+            return check === parseInt(inn[9]);
+        }
+
+        function checkInn12(inn) {
+            const coeffs1 = [7, 2, 4, 10, 3, 5, 9, 4, 6, 8, 0];
+            const coeffs2 = [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8];
+            let sum1 = coeffs1.reduce((acc, k, i) => acc + k * parseInt(inn[i]), 0);
+            let sum2 = coeffs2.reduce((acc, k, i) => acc + k * parseInt(inn[i]), 0);
+            let check1 = sum1 % 11 % 10;
+            let check2 = sum2 % 11 % 10;
+            return check1 === parseInt(inn[10]) && check2 === parseInt(inn[11]);
+        }
+
+        const isValid = raw.length === 10 ? checkInn10(raw) : checkInn12(raw);
+        result.textContent = isValid ? '✅ ИНН корректен' : '❌ ИНН недействителен';
+        result.style.color = isValid ? 'green' : 'red';
+    }
+
+    function validateKpp() {
+        const raw = document.getElementById('kpp').value.replace(/\D/g, '');
+        const result = document.getElementById('result-kpp');
+
+        if (raw.length === 9) {
+            result.textContent = '✅ КПП корректен (формат проверен)';
+            result.style.color = 'green';
+        } else {
+            result.textContent = '❌ КПП должен содержать 9 цифр';
+            result.style.color = 'red';
+        }
+    }
+
+    function validateOgrn() {
+        const raw = document.getElementById('ogrn').value.replace(/\D/g, '');
+        const result = document.getElementById('result-ogrn');
+
+        if (![13, 15].includes(raw.length)) {
+            result.textContent = 'ОГРН должен содержать 13 или 15 цифр';
+            result.style.color = 'red';
+            return;
+        }
+
+        const n = BigInt(raw.slice(0, raw.length - 1));
+        const control = Number(n % BigInt(raw.length === 13 ? 11 : 13)) % 10;
+        const lastDigit = parseInt(raw[raw.length - 1]);
+
+        if (control === lastDigit) {
+            result.textContent = '✅ ОГРН корректен';
+            result.style.color = 'green';
+        } else {
+            result.textContent = '❌ ОГРН недействителен';
+            result.style.color = 'red';
+        }
+    }
+</script>
+</body>
+</html>
