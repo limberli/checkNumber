@@ -29,30 +29,34 @@
 <body>
 <h1>Проверка СНИЛС, ИНН, ОГРН, КПП </h1>
 
+<!-- СНИЛС -->    
 <div class="section">
     <label>СНИЛС:</label>
-    <input type="text" id="snils" placeholder="123-456-789 00">
+    <input type="text" id="snils" placeholder="123-456-789 00" maxlength="11" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '')">
     <button onclick="validateSnils()">Проверить СНИЛС</button>
     <div class="result" id="result-snils"></div>
 </div>
 
+<!-- ИНН -->
 <div class="section">
     <label>ИНН:</label>
-    <input type="text" id="inn" placeholder="10 или 12 цифр">
+    <input type="text" id="inn" placeholder="10 или 12 цифр" maxlength="12" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '')">
     <button onclick="validateInn()">Проверить ИНН</button>
     <div class="result" id="result-inn"></div>
 </div>
 
+<!-- ОГРН -->
 <div class="section">
     <label>ОГРН:</label>
-    <input type="text" id="ogrn" placeholder="13 или 15 цифр">
+    <input type="text" id="ogrn" placeholder="13 или 15 цифр" maxlength="15" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '')">
     <button onclick="validateOgrn()">Проверить ОГРН</button>
     <div class="result" id="result-ogrn"></div>
 </div>
 
+<!-- КПП -->
 <div class="section">
     <label>КПП:</label>
-    <input type="text" id="kpp" placeholder="9 цифр">
+    <input type="text" id="kpp" placeholder="9 цифр" maxlength="9" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '')">
     <button onclick="validateKpp()">Проверить КПП</button>
     <div class="result" id="result-kpp"></div>
 </div>
